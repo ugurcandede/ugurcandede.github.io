@@ -1,0 +1,40 @@
+name:            Ugurcan Dede
+github_handle:   ugurcandede
+display_handle:  ugurcan.dede
+avatar:          /assets/img/avatar.jpg
+
+neofetch_host:   portfolio
+session_tagline: "grispi · developer · since 2020"
+
+neofetch_rows:
+  - { k: NAME,      v: "<span class='hl'>Ugurcan Dede</span>" }
+  - { k: TITLE,     v: "Developer @ Grispi · backend → full-stack" }
+  - { k: LOCATION,  v: "Bursa, Turkiye" }
+  - { k: EDUCATION, v: "CS @ <span class='hl'>Uludag University</span> · <span class='acc'>MIS</span>" }
+  - { k: COMPANY,   v: "<span class='acc'>Grispi</span> · Izmir, Turkiye | Remote" }
+  - { k: STACK,     v: "Kotlin · Java · PostgreSQL · Elasticsearch" }
+  - { k: SHELL,     v: "javac (21.0.10)" }
+  - { k: HOST,      v: "macOS · darwin" }
+  - { k: UPTIME,    v: "since 2020 · full-time" }
+
+bio: >-
+  <p>
+    Developer with a taste for hard problems.
+    Building customer support infrastructure at <strong>Grispi</strong> since 2020 — 
+    Lately pushing into full-stack territory.
+  </p>
+  <p>
+    After hours I ship small tools: TapLock, claude-symlink, a Windows Terminal layout generator.
+  </p>
+
+languages:
+  - { label: Java,       pct: 45 }
+  - { label: Kotlin,     pct: 22 }
+  - { label: TypeScript, pct: 18 }
+  - { label: Others,     pct: 15 }
+
+contacts:
+  - { type: link,  label: github,    url: "https://github.com/ugurcandede" }
+  - { type: link,  label: linkedin,  url: "https://www.linkedin.com/in/ugurcandede" }
+  - { type: link,  label: instagram, url: "https://www.instagram.com/ugurcan.dede" }
+  - { type: email, label: email,     user: "ugurcan.dede+gh", domain: "outlook.com.tr", style: muted }

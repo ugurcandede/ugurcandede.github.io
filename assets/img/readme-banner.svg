@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
+  <!-- README banner · 1200×500 · single-file, theme-adaptive.
+       Mirrors the site's neofetch pane: ASCII portrait (left) + info rows + bio (right).
+       Default palette is DARK; @media (light) overrides. Traffic lights theme-invariant. -->
+
+  <style>
+<!--    .bg           { fill: #0b0d10; }-->
+    .frame        { fill: #0f1114; stroke: #2a3036; }
+    .titlebar     { fill: #12151a; }
+    .border       { stroke: #2a3036; }
+    .dot          { fill: #4ade80; opacity: 0.06; }
+    .vignette-0   { stop-color: #0b0d10; stop-opacity: 0; }
+    .vignette-1   { stop-color: #000000; stop-opacity: 0.5; }
+
+    .text-primary { fill: #e5e7eb; }
+    .text-body    { fill: #d4d4d4; }
+    .text-muted   { fill: #7a8087; }
+
+    .accent-green  { fill: #4ade80; }
+    .accent-cyan   { fill: #22d3ee; }
+    .accent-yellow { fill: #facc15; }
+
+    @media (prefers-color-scheme: light) {
+<!--      .bg           { fill: #f8fafc; }-->
+      .frame        { fill: #ffffff; stroke: #cbd5e1; }
+      .titlebar     { fill: #f1f5f9; }
+      .border       { stroke: #cbd5e1; }
+      .dot          { fill: #16a34a; opacity: 0.1; }
+      .vignette-0   { stop-color: #f8fafc; stop-opacity: 0; }
+      .vignette-1   { stop-color: #94a3b8; stop-opacity: 0.18; }
+
+      .text-primary { fill: #0f172a; }
+      .text-body    { fill: #334155; }
+      .text-muted   { fill: #64748b; }
+
+      .accent-green  { fill: #16a34a; }
+      .accent-cyan   { fill: #0891b2; }
+      .accent-yellow { fill: #ca8a04; }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="vignette" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop class="vignette-0" offset="0%"/>
+      <stop class="vignette-1" offset="100%"/>
+    </linearGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle class="dot" cx="1" cy="1" r="0.8"/>
+    </pattern>
+  </defs>
+
+  <!-- bg -->
+<!--  <rect class="bg" width="1200" height="500"/>-->
+<!--  <rect width="1200" height="500" fill="url(#dots)"/>-->
+<!--  <rect width="1200" height="500" fill="url(#vignette)"/>-->
+
+  <!-- terminal frame -->
+  <rect class="frame" x="60" y="40" width="1080" height="420" rx="10" stroke-width="1.5"/>
+
+  <!-- title bar -->
+  <path class="titlebar" d="M 70 40 H 1130 A 10 10 0 0 1 1140 50 V 84 H 60 V 50 A 10 10 0 0 1 70 40 Z"/>
+  <line class="border" x1="60" y1="84" x2="1140" y2="84" stroke-width="1"/>
+
+  <!-- traffic lights (theme-invariant) -->
+  <circle cx="88"  cy="62" r="7" fill="#ef4444"/>
+  <circle cx="110" cy="62" r="7" fill="#f59e0b"/>
+  <circle cx="132" cy="62" r="7" fill="#22c55e"/>
+
+  <!-- session tab -->
+  <text class="accent-green" x="600" y="68" text-anchor="middle"
+        font-family="'JetBrains Mono', 'Fira Code', monospace" font-size="13" font-weight="700" letter-spacing="0.3">[ugurcandede]</text>
+
+  <!-- LEFT: ASCII panel — always dark regardless of theme so portrait stays readable -->
+  <rect x="100" y="100" width="222" height="285" rx="6" fill="#0b0d10" stroke="#2a3036" stroke-width="1"/>
+
+  <!-- ASCII portrait -->
+  <text x="221" y="108" fill="#4ade80" text-anchor="middle"
+        font-family="'JetBrains Mono', 'Fira Code', 'Consolas', monospace"
+        font-size="7" xml:space="preserve">
+    <tspan x="221" dy="0">*********************************+=+++++++-=+****++*:::=</tspan>
+    <tspan x="221" dy="7">****************************+=====:===:-----+*******=.-=</tspan>
+    <tspan x="221" dy="7">**********************+++++=======--+==:----=+****++-.:-</tspan>
+    <tspan x="221" dy="7">***************+++++++=+++=========--===:----+***+*+=::-</tspan>
+    <tspan x="221" dy="7">***+******+++++++=+====+============--==-:----++**+*=.:-</tspan>
+    <tspan x="221" dy="7">+++++++++++++++++=+++===============--===-::::-++++++.::</tspan>
+    <tspan x="221" dy="7">*++=+++++++++++++=+==================--:=++++=--+++++-.:</tspan>
+    <tspan x="221" dy="7">++++++++++++=+=+====+==============-====----==-+++++=-.:</tspan>
+    <tspan x="221" dy="7">++++++++++++=+++=====+============----------==+++====-..</tspan>
+    <tspan x="221" dy="7">+++++++++++++++==============----==---------==========:.</tspan>
+    <tspan x="221" dy="7">++++*++==+=+==================---------------=======-=+.</tspan>
+    <tspan x="221" dy="7">+====-==+-=============-:::::=------------------====--+*</tspan>
+    <tspan x="221" dy="7">+++===-==--==========:.:...::::..---------------=-----=+</tspan>
+    <tspan x="221" dy="7">==================--.......:::::.::..:-----:----===----=</tspan>
+    <tspan x="221" dy="7">===============----::.:=**######*+-:...----:-------=----</tspan>
+    <tspan x="221" dy="7">=========----=------.=############*=-:..:-::--:---------</tspan>
+    <tspan x="221" dy="7">--------------------=######=++**=#**==:.::::::::::=-----</tspan>
+    <tspan x="221" dy="7">------------------:-#**#=------+##+*=+-:::::::::::------</tspan>
+    <tspan x="221" dy="7">-----------------:+*++#%*=-::-::*###===-.:::::::::::----</tspan>
+    <tspan x="221" dy="7">--------:::-:--:::-+==##*-:.::=*##%%*=+#*-:::::::::::::-</tspan>
+    <tspan x="221" dy="7">------::-:::::::::..:=####*****##%%%#*#%%=:::....:::::::</tspan>
+    <tspan x="221" dy="7">.. .:-----::::::::::**+*++##%%%%%%%#*+#+#+:--....:::::::</tspan>
+    <tspan x="221" dy="7">.   .:::::::::::::::%*=*++-=#%*#%*#***%%-::+=.....::::::</tspan>
+    <tspan x="221" dy="7">..  .*:..:::::::::::#==####*+***##+#++=::::#+:....::::::</tspan>
+    <tspan x="221" dy="7">..   +@%=...::::::::*=*-:-+++=++**++=#+:-::==.....:=++-:</tspan>
+    <tspan x="221" dy="7">...  .%%+. .:*+-:::::-+--++=-+==+=-=*%=---::-.....=%%#**</tspan>
+    <tspan x="221" dy="7">...  .#**. .:%#%#=-::.=----:::.--=+*#%-+-:*==:....-*%%%#</tspan>
+    <tspan x="221" dy="7"> ..++###=.  :-%**%+**-:::.:::--===*+##=::--:=:.....+*##%</tspan>
+    <tspan x="221" dy="7">%*=:%%@%:.  --#=:**+:.:..+=--=+**#*##+:-:::.:.   .... ..</tspan>
+    <tspan x="221" dy="7">==::#*@::...:.:=...  -:..+#########*---==:.....:..:-....</tspan>
+    <tspan x="221" dy="7">==.......:........-:.===-=*###*#++-=----=::::::..:------</tspan>
+    <tspan x="221" dy="7">*-....   ...:.=-::::-+=+-+##%%%#====---+-::::::..:::.:--</tspan>
+    <tspan x="221" dy="7">:.......:::---==::::=+---=+##%%+-====--:--:::--:::--:.:-</tspan>
+    <tspan x="221" dy="7">....-+---==-==-::::-==+-**+#%%#+--==-:+=--:---==--=---::</tspan>
+    <tspan x="221" dy="7">....%*++=+=++=::--=-=+=-*##%%##%=++=+::=-=-----=====+=-:</tspan>
+    <tspan x="221" dy="7">...%#+++=+*+=-:--==-=+=-+#%%%%#%@-------------=======+=:</tspan>
+    <tspan x="221" dy="7">..+#++=**=+=-:--===-=*+=#%%%%%%#*-=======---========+-=+</tspan>
+    <tspan x="221" dy="7">.-*=+*#+##+------=-===+*%@%%%#%%#*==--===-=-============</tspan>
+    <tspan x="221" dy="7">:#=#*+++*%=---===---++*%%%#%%%%#%*=---==-==-=+++========</tspan>
+    <tspan x="221" dy="7">###--++#**=---=-----:*%@%#%##%%%#%+-==:+==-=+-==++=++-=:</tspan>
+  </text>
+
+  <!-- color dots — outside the panel, horizontally centered on it
+       (block width = 7·12 + 6·6 = 120; start x = 221 - 60 = 161) -->
+  <g>
+    <rect x="161" y="400" width="12" height="12" rx="2" fill="#f87171"/>
+    <rect x="179" y="400" width="12" height="12" rx="2" fill="#4ade80"/>
+    <rect x="197" y="400" width="12" height="12" rx="2" fill="#facc15"/>
+    <rect x="215" y="400" width="12" height="12" rx="2" fill="#60a5fa"/>
+    <rect x="233" y="400" width="12" height="12" rx="2" fill="#e879f9"/>
+    <rect x="251" y="400" width="12" height="12" rx="2" fill="#22d3ee"/>
+    <rect x="269" y="400" width="12" height="12" rx="2" fill="#d4d4d4"/>
+  </g>
+
+  <!-- RIGHT: neofetch info -->
+  <!-- header -->
+  <text x="370" y="120" font-family="'JetBrains Mono', monospace" font-size="17" font-weight="700">
+    <tspan class="accent-green">ugurcandede</tspan><tspan class="text-muted">@</tspan><tspan class="accent-cyan">github</tspan>
+  </text>
+  <line class="border" x1="370" y1="138" x2="1090" y2="138" stroke-width="1.4"/>
+
+  <!-- info rows -->
+  <g font-family="'JetBrains Mono', monospace" font-size="14">
+    <text class="accent-green" x="370" y="170" font-weight="600">NAME</text>
+    <text class="text-primary" x="480" y="170" font-weight="600">Ugurcan Dede</text>
+
+    <text class="accent-green" x="370" y="192" font-weight="600">TITLE</text>
+    <text class="text-body"    x="480" y="192">Developer @ Grispi</text>
+
+    <text class="accent-green" x="370" y="214" font-weight="600">LOCATION</text>
+    <text class="text-body"    x="480" y="214">Bursa, Turkiye</text>
+
+    <text class="accent-green" x="370" y="236" font-weight="600">EDUCATION</text>
+    <text x="480" y="236">
+      <tspan class="text-body">CS @ </tspan>
+      <tspan class="text-primary" font-weight="600">Uludag University</tspan>
+      <tspan class="text-body"> · </tspan>
+      <tspan class="accent-cyan">MIS</tspan>
+    </text>
+
+    <text class="accent-green" x="370" y="258" font-weight="600">COMPANY</text>
+    <text x="480" y="258">
+      <tspan class="accent-yellow" font-weight="600">Grispi</tspan>
+      <tspan class="text-body"> · Izmir, Turkiye | Remote</tspan>
+    </text>
+
+    <text class="accent-green" x="370" y="280" font-weight="600">STACK</text>
+    <text class="text-body"    x="480" y="280">Java · Kotlin · PostgreSQL · Elasticsearch</text>
+
+    <text class="accent-green" x="370" y="302" font-weight="600">SHELL</text>
+    <text class="text-body"    x="480" y="302">javac (21.0.10)</text>
+
+<!--    <text class="accent-green" x="370" y="324" font-weight="600">HOST</text>-->
+<!--    <text class="text-body"    x="480" y="324">macOS · darwin</text>-->
+
+    <text class="accent-green" x="370" y="324" font-weight="600">UPTIME</text>
+    <text class="text-body"    x="480" y="324">since 2020 · full-time</text>
+  </g>
+
+  <!-- bio -->
+  <g font-family="'JetBrains Mono', monospace" font-size="13">
+    <text class="text-body" x="370" y="362">Developer with a taste for hard problems. Building customer support infrastructure at</text>
+    <text x="370" y="379">
+      <tspan class="accent-yellow" font-weight="600">Grispi</tspan> <tspan class="text-body"> since 2020 — Lately pushing into full-stack territory.</tspan>
+    </text>
+    <text class="text-body" x="370" y="408"> After hours I ship small tools: TapLock, claude-symlink, a Windows Terminal layout generator.</text>
+  </g>
+</svg>

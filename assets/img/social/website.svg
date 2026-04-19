@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 56" width="280" height="56">
+  <style>
+    .bg     { fill: #0b0d10; }
+    .border { stroke: #2a3036; }
+    .text   { fill: #e5e7eb; font-family: 'JetBrains Mono','Fira Code','Consolas',monospace; font-size: 14px; font-weight: 500; }
+    .accent { stroke: #4ade80; fill: none; }
+    .prompt { fill: #4ade80; }
+    @media (prefers-color-scheme: light) {
+      .bg     { fill: #ffffff; }
+      .border { stroke: #cbd5e1; }
+      .text   { fill: #0f172a; }
+      .accent { stroke: #16a34a; }
+      .prompt { fill: #16a34a; }
+    }
+  </style>
+  <rect class="bg border" x="0.5" y="0.5" width="279" height="55" rx="6" stroke-width="1"/>
+  <g transform="translate(16, 16)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle class="accent" cx="12" cy="12" r="10"/>
+    <path class="accent" d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+  </g>
+  <text class="text" x="52" y="28" dominant-baseline="central">
+    <tspan class="prompt">~</tspan> ugurcandede.github.io
+  </text>
+</svg>

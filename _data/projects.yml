@@ -1,0 +1,19 @@
+- name: TapLock
+  tech: [Swift, SwiftUI]
+  homepage: https://ugurcandede.github.io/taplock-app/
+  variants:
+    - { label: app, repo: ugurcandede/taplock-app }
+    - { label: cli, repo: ugurcandede/taplock }
+    - { label: tap, repo: ugurcandede/homebrew-taplock }
+
+- name: claude-symlink
+  tech: [Node.js, CLI]
+  repo: ugurcandede/claude-symlink
+
+- name: windows-terminal-layout-generator
+  tech: [JavaScript, HTML, Tailwind]
+  repo: ugurcandede/windows-terminal-multi-panel-setup-generator
+
+- name: s3-presigned-url-proxy
+  tech: [Python, Flask, Docker]
+  repo: ugurcandede/s3-presigned-url-proxy

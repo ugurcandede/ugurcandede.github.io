@@ -1,0 +1,162 @@
+---
+layout: default
+---
+{% assign p = site.data.profile %}
+<div class="session">
+
+  <div class="session-bar">
+    <span class="bar-label">[{{ p.display_handle }}]</span>
+    <span class="tag on"><span class="n">0</span>neofetch</span>
+    <span class="tag on"><span class="n">1</span>projects*</span>
+    <span class="tag on"><span class="n">2</span>pulse</span>
+    <span class="tag on"><span class="n">3</span>contact</span>
+    <span class="spacer"></span>
+    <span class="uptime">{{ p.session_tagline }}</span>
+  </div>
+
+  <div class="panes">
+
+    <!-- 0: neofetch -->
+    <div class="pane col-span-2">
+      <div class="pane-hdr">
+        <span class="idx">0</span>
+        <span class="title">neofetch</span>
+        <span class="meta">user profile · system info</span>
+        <span class="dots">· · ·</span>
+      </div>
+      <div class="pane-body neofetch">
+
+        <span style="display:flex; flex-direction:column; height:100%;">
+          <pre class="ascii-avatar" aria-label="{{ p.name }}, ascii portrait"
+             data-avatar="{{ p.avatar | relative_url }}"
+             data-fallback="https://github.com/{{ p.github_handle }}.png">loading&hellip;</pre>
+          <div class="color-dots" style="align-self:center;">
+            <span style="background:#f87171;"></span>
+            <span style="background:#4ade80;"></span>
+            <span style="background:#facc15;"></span>
+            <span style="background:#60a5fa;"></span>
+            <span style="background:#e879f9;"></span>
+            <span style="background:#22d3ee;"></span>
+            <span style="background:#d4d4d4;"></span>
+          </div>
+        </span>
+        <div class="info">
+          <div class="top">{{ p.github_handle }}<span class="at">@</span><span class="host">{{ p.neofetch_host }}</span></div>
+          <div class="divider">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
+          {% for r in p.neofetch_rows %}
+            <div class="row"><span class="k">{{ r.k }}</span><span class="v">{{ r.v }}</span></div>
+          {% endfor %}
+
+          <div class="bio-row">{{ p.bio }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1: ls projects -->
+    <div class="pane top-right">
+      <div class="pane-hdr cyan">
+        <span class="idx">1</span>
+        <span class="title">ls -la projects/</span>
+        <span class="meta">{{ site.data.projects | size }} items</span>
+        <span class="dots">· · ·</span>
+      </div>
+      <div class="pane-body">
+        <table class="ls-table">
+          <thead>
+            <tr>
+              <th>perm</th>
+              <th>name</th>
+              <th>tech</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for project in site.data.projects %}
+              {% assign url = project.homepage | default: nil %}
+              {% if url == nil and project.repo %}{% assign url = project.repo | prepend: 'https://github.com/' %}{% endif %}
+              {% if url == nil and project.variants %}{% assign url = project.variants[0].repo | prepend: 'https://github.com/' %}{% endif %}
+              {% assign slug = project.name | downcase | replace: ' ', '-' %}
+              <tr class="ls-row{% if project.variants %} has-children{% endif %}">
+                <td class="perm">{% if project.variants %}drwxr-xr-x{% else %}-rw-r--r--{% endif %}</td>
+                <td class="name"><a href="{{ url }}" target="_blank" rel="noopener">{{ slug }}{% if project.variants %}/{% endif %}</a></td>
+                <td class="tech">{% for t in project.tech %}<span>{{ t }}</span>{% endfor %}</td>
+              </tr>
+              {% if project.variants %}
+                <tr><td colspan="3" style="padding:0;">
+                  <div class="ls-variants">
+                    {% for v in project.variants %}
+                      <div class="lsv">
+                        <span class="lbl">{{ v.label }}</span>
+                        <a href="https://github.com/{{ v.repo }}" target="_blank" rel="noopener">{{ v.repo }}</a>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </td></tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 2: pulse (hybrid — heatmap + stats + langs) -->
+    <div class="pane bot-left">
+      <div class="pane-hdr yellow">
+        <span class="idx">2</span>
+        <span class="title">pulse — github activity</span>
+        <span class="meta">live · {{ p.github_handle }}</span>
+        <span class="dots">· · ·</span>
+      </div>
+      <div class="pane-body">
+        <div class="hybrid">
+          <div>
+            <div class="hybrid-label"><span class="hash">#</span> contributions · last 180 days</div>
+            <div class="yearmap" data-yearmap data-yearmap-days="180"><div class="loading">loading&hellip;</div></div>
+          </div>
+          <div>
+            <div class="hybrid-label"><span class="hash">#</span> stats</div>
+            <div class="ntop" data-neofetch-stats><div class="loading">loading&hellip;</div></div>
+          </div>
+          <div>
+            <div class="hybrid-label"><span class="hash">#</span> languages</div>
+            <div class="langs" data-langbars
+                 data-langs="{% for l in p.languages %}{{ l.label }}:{{ l.pct }}{% unless forloop.last %},{% endunless %}{% endfor %}">
+              <div class="loading">loading&hellip;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: contact -->
+    <div class="pane bot-right">
+      <div class="pane-hdr magenta">
+        <span class="idx">3</span>
+        <span class="title">contact --list</span>
+        <span class="meta">{{ p.contacts | size }} channels</span>
+        <span class="dots">· · ·</span>
+      </div>
+      <div class="pane-body">
+        <ul class="contact-list">
+          {% for c in p.contacts %}
+            <li>
+              <span class="dot">▸</span>
+              <span class="k">{{ c.label }}</span>
+              {% if c.type == 'email' %}
+                <button type="button" data-email-user="{{ c.user }}" data-email-domain="{{ c.domain }}">
+                  &lt;reveal&gt;
+                </button>
+              {% else %}
+                <a href="{{ c.url }}" target="_blank" rel="noopener">{{ c.url | remove: 'https://' | remove: 'www.' }}</a>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="contact-prompt">
+          <span class="p">{{ p.github_handle }}@portfolio ~ $</span> <span class="cursor"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

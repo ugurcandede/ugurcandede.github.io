@@ -1,0 +1,19 @@
+title:       ugurcandede@dev
+meta_title:  "Ugurcan Dede · Developer"
+tagline:     Developer @ Grispi
+description: "Developer with a taste for hard problems. Customer support infrastructure @ Grispi — pushing into full-stack. After hours: TapLock, claude-symlink."
+url:         https://ugurcandede.github.io
+lang:        en
+locale:      en_US
+
+og_image:        /assets/img/og.png
+og_image_width:  1200
+og_image_height: 630
+twitter_handle:  "dedeugurcan"
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+  - node_modules

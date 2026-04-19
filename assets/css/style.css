@@ -1,0 +1,640 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0b0d10;
+  --pane-bg:   #0f1114;
+  --fg:        #d4d4d4;
+  --muted:     #7a8087;
+  --dim:       #5a5f66; /* bumped from #4a4e53 for WCAG AA on bg */
+  --line:      #1f2429;
+  --line-hl:   #2a3036;
+  --green:     #4ade80;
+  --cyan:      #22d3ee;
+  --yellow:    #facc15;
+  --magenta:   #e879f9;
+  --red:       #f87171;
+  --blue:      #60a5fa;
+  --orange:    #fb923c;
+  --mono:      "JetBrains Mono", "Fira Code", "SF Mono", ui-monospace,
+               Menlo, Consolas, monospace;
+
+  --tap:       44px;    /* WCAG AAA minimum tap target */
+  --pad:       16px;
+  --pad-sm:    10px;
+}
+
+html { background: var(--bg); min-height: 100vh; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.55;
+  min-height: 100vh;
+  padding:
+    max(var(--pad), env(safe-area-inset-top))
+    max(var(--pad), env(safe-area-inset-right))
+    max(var(--pad), env(safe-area-inset-bottom))
+    max(var(--pad), env(safe-area-inset-left));
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: contain;
+}
+
+/* Keyboard focus — visible ring for keyboard users, hidden for mouse */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── tmux-like outer status ── */
+.session {
+  max-width: 1280px;
+  margin: 0 auto;
+  border: 1px solid var(--line-hl);
+  border-radius: 4px;
+  overflow: hidden;
+  container-type: inline-size;
+  container-name: session;
+}
+
+.session-bar {
+  display: flex;
+  flex-wrap: wrap;
+  background: #12151a;
+  border-bottom: 1px solid var(--line-hl);
+  font-size: 11.5px;
+  color: var(--muted);
+  padding: 7px 12px;
+  gap: 6px 14px;
+  letter-spacing: 0.02em;
+}
+
+.session-bar .bar-label { color: var(--green); font-weight: 700; white-space: nowrap; }
+.session-bar .tag { color: var(--muted); white-space: nowrap; }
+.session-bar .tag.on { color: var(--cyan); }
+.session-bar .tag .n { color: var(--yellow); margin-right: 4px; }
+.session-bar .spacer { flex: 1 0 0; }
+.session-bar .uptime { color: var(--muted); white-space: nowrap; }
+
+/* ── pane grid ── */
+.panes {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "neofetch neofetch"
+    "ls       pulse"
+    "contact  pulse";
+  gap: 0;
+}
+
+.pane {
+  background: var(--pane-bg);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* map legacy class names to grid areas */
+.pane.col-span-2 { grid-area: neofetch; }
+.pane.top-right  { grid-area: ls; }
+.pane.bot-left   { grid-area: pulse; }
+.pane.bot-right  { grid-area: contact; }
+
+/* edge borders: right-edge panes drop right border, bottom-edge panes drop bottom */
+.pane.col-span-2 { border-right: none; }
+.pane.bot-left   { border-right: none; border-bottom: none; }
+.pane.bot-right  { border-bottom: none; }
+
+/* Container query: when the session is narrower than pulse needs,
+   stack everything instead of letting content scroll internally. */
+@container session (max-width: 1100px) {
+  .panes {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "neofetch"
+      "ls"
+      "pulse"
+      "contact";
+  }
+  .pane { border-right: none; border-bottom: 1px solid var(--line); }
+  .pane.bot-right { border-bottom: none; }
+  .pane.bot-left  { border-bottom: 1px solid var(--line); border-right: none; }
+}
+
+/* Viewport fallback for ancient browsers without container query support. */
+@supports not (container-type: inline-size) {
+  @media (max-width: 1140px) {
+    .panes {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "neofetch"
+        "ls"
+        "pulse"
+        "contact";
+    }
+    .pane { border-right: none; border-bottom: 1px solid var(--line); }
+    .pane.bot-right { border-bottom: none; }
+    .pane.bot-left  { border-bottom: 1px solid var(--line); border-right: none; }
+  }
+}
+
+.pane-hdr {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: #0d0f12;
+  gap: 0 10px;
+}
+
+.pane-hdr .idx {
+  color: var(--bg);
+  background: var(--green);
+  padding: 1px 6px;
+  margin-right: 10px;
+  font-weight: 700;
+  font-size: 10.5px;
+}
+
+.pane-hdr.cyan .idx { background: var(--cyan); }
+.pane-hdr.yellow .idx { background: var(--yellow); }
+.pane-hdr.magenta .idx { background: var(--magenta); }
+.pane-hdr.orange .idx { background: var(--orange); }
+
+.pane-hdr .title { color: var(--fg); font-weight: 500; }
+.pane-hdr .meta { color: var(--muted); font-size: 10.5px; min-width: 0; }
+.pane-hdr .dots { margin-left: auto; color: var(--dim); letter-spacing: 0.4em; }
+
+.pane-body {
+  padding: 14px 16px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  max-height: 100%;
+  overflow: auto;
+}
+
+/* ── neofetch pane ── */
+.neofetch {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+}
+
+/* ── ASCII portrait (generated client-side by effects.js) ── */
+.ascii-avatar {
+  font-family: var(--mono);
+  font-size: 5.5px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--green);
+  white-space: pre;
+  margin: 0;
+  padding: 0;
+  text-shadow: 0 0 4px rgba(74, 222, 128, 0.3);
+  align-self: center !important;
+}
+
+.neofetch .info { font-size: 12.5px; line-height: 1.75; }
+
+.neofetch .top {
+  color: var(--yellow);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.neofetch .top .at { color: var(--muted); }
+.neofetch .top .host { color: var(--cyan); }
+
+.neofetch .divider {
+  color: var(--dim);
+  letter-spacing: 0;
+  margin-bottom: 6px;
+}
+
+.neofetch .row { display: flex; gap: 8px; }
+.neofetch .row .k { color: var(--green); width: 82px; flex-shrink: 0; font-weight: 600; }
+.neofetch .row .v { color: var(--fg); }
+.neofetch .row .v .hl { color: var(--cyan); }
+.neofetch .row .v .acc { color: var(--yellow); }
+
+.neofetch .bio-row {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line-hl);
+  max-width: 64ch;
+  color: #c6c6c6;
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+.neofetch .bio-row strong { color: var(--yellow); font-weight: 700; }
+
+.neofetch .color-dots {
+  margin-top: 24px;
+  display: flex;
+  gap: 4px;
+}
+
+.neofetch .color-dots span {
+  width: 18px;
+  height: 12px;
+  display: inline-block;
+}
+
+/* ── ls projects pane ── */
+.ls-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.ls-table th, .ls-table td {
+  text-align: left;
+  padding: 4px 10px 4px 0;
+  vertical-align: baseline;
+}
+
+.ls-table th {
+  font-weight: 400;
+  color: var(--dim);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ls-table tbody tr { border-bottom: 1px dashed var(--line); }
+.ls-table tbody tr:last-child { border-bottom: none; }
+
+.ls-row .perm { color: var(--dim); white-space: nowrap; }
+.ls-row .name { color: var(--cyan); font-weight: 500; }
+.ls-row .name a {
+  color: var(--cyan);
+  text-decoration: none;
+  display: inline-block;
+  padding: 6px 0;           /* bigger tap target */
+  margin: -6px 0;           /* don't stretch row visually */
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.ls-row .name a:hover,
+.ls-row .name a:focus-visible { color: var(--yellow); border-bottom-color: var(--yellow); }
+.ls-row .tech { color: var(--muted); font-size: 11.5px; }
+.ls-row .tech span + span::before { content: " · "; color: var(--dim); }
+
+.ls-row.has-children { color: var(--green); }
+.ls-row.has-children .name::before { content: "▾ "; color: var(--green); }
+
+.ls-variants {
+  padding-left: 24px;
+  font-size: 11.5px;
+  border-left: 1px solid var(--line-hl);
+  margin: 2px 0 6px 4px;
+}
+
+.ls-variants .lsv {
+  padding: 4px 0;
+  display: flex;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.ls-variants .lsv a {
+  color: var(--blue);
+  text-decoration: none;
+  padding: 4px 0;
+  margin: -4px 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.ls-variants .lsv a:hover,
+.ls-variants .lsv a:focus-visible { color: var(--cyan); border-bottom-color: var(--cyan); }
+.ls-variants .lsv .lbl { color: var(--magenta); min-width: 28px; }
+
+/* ── pulse hybrid pane (heatmap + stats + langs) ──
+   Default layout: vertically stacked. Re-arranged at specific breakpoints below. */
+.hybrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "heatmap"
+    "stats"
+    "langs";
+  gap: 22px;
+}
+
+.hybrid > div:nth-child(1) { grid-area: heatmap; min-width: 0; }
+.hybrid > div:nth-child(2) { grid-area: stats;   min-width: 0; }
+.hybrid > div:nth-child(3) { grid-area: langs;   min-width: 0; }
+
+/* 2nd breakpoint: panes are stacked (container ≤1100) but viewport is still
+   wide enough for the heatmap (≥800px). Heatmap + stats go side-by-side,
+   languages span full width below. */
+@container session ((max-width: 1100px) and (min-width: 801px)) {
+  .pane.bot-left .hybrid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-areas:
+      "heatmap stats"
+      "langs   langs";
+    column-gap: 28px;
+    row-gap: 24px;
+  }
+}
+
+.hybrid-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.hybrid-label .hash { color: var(--green); margin-right: 6px; }
+
+/* year heatmap */
+.yearmap {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--green);
+  white-space: pre;
+  overflow: hidden; /* no internal scroll — layout drops to single-col instead */
+  text-shadow: 0 0 3px rgba(74, 222, 128, 0.25);
+  letter-spacing: 1px;
+  /* center the graph block inside its container (content-width + auto margin) */
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.yearmap .row { display: block; padding: 1px 0; }
+.yearmap .row .lbl {
+  color: var(--muted);
+  text-shadow: none;
+  margin-right: 8px;
+  display: inline-block;
+  width: 28px;
+  letter-spacing: 0;
+}
+.yearmap .months {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0;
+  margin-top: 4px;
+  padding-left: 36px;
+  text-shadow: none;
+}
+.yearmap .legend {
+  margin-top: 10px;
+  font-size: 10.5px;
+  color: var(--muted);
+  text-shadow: none;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  letter-spacing: 0;
+}
+.yearmap .legend .swatch { color: var(--green); text-shadow: 0 0 3px rgba(74, 222, 128, 0.25); }
+.yearmap .loading, .yearmap .err {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 11.5px;
+  text-shadow: none;
+  letter-spacing: 0;
+  padding: 8px 0;
+}
+
+/* neofetch-style stats */
+.ntop { font-family: var(--mono); font-size: 12px; line-height: 1.75; }
+.ntop .head {
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 2px;
+  text-shadow: 0 0 4px rgba(74, 222, 128, 0.3);
+}
+.ntop .head .host { color: var(--cyan); }
+.ntop .head .at { color: var(--muted); }
+.ntop .divider { color: var(--dim); margin-bottom: 6px; letter-spacing: 0; }
+.ntop .row { display: flex; gap: 10px; }
+.ntop .k { color: var(--green); font-weight: 600; width: 110px; flex-shrink: 0; }
+.ntop .v { color: var(--fg); }
+.ntop .v .hl { color: var(--cyan); }
+.ntop .v .acc { color: var(--yellow); }
+.ntop .loading, .ntop .err { color: var(--muted); font-style: italic; font-size: 11.5px; }
+
+/* language horizontal bars */
+.langs { font-family: var(--mono); font-size: 12px; line-height: 1.6; }
+.langs .head {
+  color: var(--muted);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.langs .row {
+  display: grid;
+  grid-template-columns: 110px 1fr 44px;
+  gap: 12px;
+  align-items: baseline;
+  padding: 3px 0;
+}
+.langs .name { color: var(--fg); }
+.langs .bar {
+  font-size: 11.5px;
+  letter-spacing: -1px;
+  color: var(--green);
+  text-shadow: 0 0 3px rgba(74, 222, 128, 0.25);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.langs .bar .empty { color: var(--dim); text-shadow: none; }
+.langs .pct { color: var(--yellow); text-align: right; }
+.langs .loading, .langs .err { color: var(--muted); font-style: italic; font-size: 11.5px; }
+
+/* ── contact pane ── */
+.contact-list {
+  list-style: none;
+  font-size: 12.5px;
+  line-height: 1.8;
+}
+
+.contact-list li { display: flex; align-items: baseline; gap: 10px; padding: 3px 0; }
+.contact-list .dot { color: var(--green); }
+.contact-list .k { color: var(--yellow); min-width: 82px; }
+
+.contact-list a, .contact-list button {
+  color: var(--cyan);
+  background: none;
+  border: none;
+  padding: 8px 0;         /* bigger tap target, doesn't affect visible width */
+  margin: -8px 0;
+  font: inherit;
+  font-family: var(--mono);
+  cursor: pointer;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.contact-list a:hover, .contact-list button:hover,
+.contact-list a:focus-visible, .contact-list button:focus-visible {
+  color: var(--yellow);
+  border-bottom-color: var(--yellow);
+}
+
+/* ensure touch feedback on phones */
+@media (hover: none) {
+  .contact-list a:active, .contact-list button:active { color: var(--yellow); }
+}
+
+.contact-prompt {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.contact-prompt .p { color: var(--green); }
+.contact-prompt .cursor {
+  display: inline-block;
+  width: 8px;
+  height: 13px;
+  background: var(--green);
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
+}
+
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+/* email challenge */
+.email-challenge-input {
+  font-family: var(--mono);
+  font-size: max(16px, 1em); /* 16px min avoids iOS focus-zoom */
+  color: var(--yellow);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--yellow);
+  outline: none;
+  width: 2.6em;
+  padding: 4px 2px;
+  margin-left: 4px;
+  line-height: 1;
+}
+
+.email-challenge-input:focus-visible {
+  outline: none;
+  border-bottom-width: 2px;
+}
+
+.email-challenge-input.wrong {
+  border-bottom-color: var(--red);
+  color: var(--red);
+  animation: shake 0.35s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-3px); }
+  75%      { transform: translateX(3px); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Responsive layers
+   ─────────────────────────────────────────────────────────────────────────
+   · Pane grid collapse → handled by @container session (max-width: 1100px)
+     above (with @supports fallback). Don't duplicate here.
+   · Below 640px: comfort bump for touch — font, padding, table-stack.
+   · Below 400px: shrink session-bar to essentials.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  :root { --pad: 10px; }
+  body {
+    font-size: 14px;       /* more legible than 13 on small screens */
+    line-height: 1.6;
+  }
+  .session-bar { font-size: 11px; padding: 8px 10px; }
+  .pane-body { padding: 14px 14px; font-size: 13px; }
+
+  /* Neofetch: shrink ascii bump it from the info */
+  .neofetch { grid-template-columns: 1fr; gap: 14px; }
+  .neofetch .info { font-size: 13px; }
+  .neofetch .row .k { width: 70px; font-size: 11.5px; }
+  .ascii-avatar { font-size: 6.5px; justify-self: center; align-self: start; }
+
+  /* ls-table → stacked card-like rows (table markup preserved for accessibility) */
+  .ls-table { display: block; }
+  .ls-table thead { display: none; }
+  .ls-table tbody, .ls-table tr { display: block; }
+  .ls-table tr { padding: 10px 0; border-bottom: 1px dashed var(--line); }
+  .ls-table tbody tr:last-child { border-bottom: none; }
+  .ls-table td { display: block; padding: 2px 0; }
+
+  .ls-row .perm {
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .ls-row .name { font-size: 14px; }
+  .ls-row .tech { color: var(--muted); font-size: 11.5px; }
+  .ls-variants { margin-top: 4px; padding-left: 16px; }
+
+  /* ntop stats: shrink key column */
+  .ntop .k { width: 96px; font-size: 11.5px; }
+
+  /* language bars: shrink name column, drop pct width */
+  .langs .row { grid-template-columns: 90px 1fr 40px; gap: 10px; }
+
+  /* contact list: more padding for touch, wider hit area */
+  .contact-list { font-size: 14px; }
+  .contact-list li { padding: 8px 0; gap: 12px; align-items: center; }
+  .contact-list .k { min-width: 70px; font-size: 12.5px; }
+
+  /* prevent the year heatmap from clipping on tiny screens: allow scroll here */
+  .yearmap { overflow-x: auto; }
+}
+
+@media (max-width: 400px) {
+  .session-bar .uptime { display: none; }
+  .session-bar .tag { font-size: 10.5px; }
+  .pane-hdr .meta { display: none; }  /* redundant w/ title under tight width */
+  .ntop .k { width: 84px; }
+  .langs .row { grid-template-columns: 76px 1fr 36px; gap: 8px; font-size: 11.5px; }
+
+  /* Center the pulse pane's hybrid column at the narrowest width */
+  .pane.bot-left > .pane-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .pane.bot-left .hybrid {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .contact-prompt .cursor { animation: none; opacity: 1; }
+}

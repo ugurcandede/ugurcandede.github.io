@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Social preview banner · 1200×630 landscape · mirrors the site's tmux aesthetic.
+       Edit values here, re-export to PNG (see notes in repo). -->
+
+  <defs>
+    <linearGradient id="vignette" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#0b0d10" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
+    </linearGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.8" fill="#4ade80" opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <!-- bg -->
+  <rect width="1200" height="630" fill="#0b0d10"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect width="1200" height="630" fill="url(#vignette)"/>
+
+  <!-- terminal frame -->
+  <rect x="60" y="50" width="1080" height="530" rx="10" fill="#0f1114" stroke="#2a3036" stroke-width="1.5"/>
+
+  <!-- title bar -->
+  <path d="M 70 50 H 1130 A 10 10 0 0 1 1140 60 V 94 H 60 V 60 A 10 10 0 0 1 70 50 Z" fill="#12151a"/>
+  <line x1="60" y1="94" x2="1140" y2="94" stroke="#2a3036" stroke-width="1"/>
+
+  <!-- traffic lights -->
+  <circle cx="88" cy="72" r="7" fill="#ef4444"/>
+  <circle cx="110" cy="72" r="7" fill="#f59e0b"/>
+  <circle cx="132" cy="72" r="7" fill="#22c55e"/>
+
+  <!-- session tabs -->
+  <text x="600" y="78" text-anchor="middle" fill="#7a8087"
+        font-family="'JetBrains Mono', 'Fira Code', monospace" font-size="13" letter-spacing="0.3">
+    <tspan fill="#4ade80" font-weight="700">[ugurcandede]</tspan>
+<!--    <tspan dx="18">0 neofetch*</tspan>-->
+<!--    <tspan dx="14">1 projects</tspan>-->
+<!--    <tspan dx="14">2 pulse</tspan>-->
+<!--    <tspan dx="14">3 contact</tspan>-->
+  </text>
+
+  <!-- command prompt -->
+  <text x="140" y="180" fill="#7a8087" font-family="'JetBrains Mono', monospace" font-size="16">~</text>
+  <text x="164" y="180" fill="#d4d4d4" font-family="'JetBrains Mono', monospace" font-size="16">whoami</text>
+
+  <!-- name (hero) -->
+  <text x="140" y="265" fill="#e5e7eb" font-family="'JetBrains Mono', 'Fira Code', monospace"
+        font-size="72" font-weight="700" letter-spacing="-2">Ugurcan Dede</text>
+
+  <!-- role -->
+  <text x="140" y="308" fill="#22d3ee" font-family="'JetBrains Mono', monospace"
+        font-size="22" letter-spacing="0.02em">Developer @ Grispi</text>
+
+  <!-- divider -->
+  <line x1="140" y1="345" x2="1060" y2="345" stroke="#2a3036" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <!-- info rows -->
+  <g font-family="'JetBrains Mono', monospace" font-size="16">
+    <text x="140" y="385" fill="#4ade80" font-weight="600">STACK</text>
+    <text x="268" y="385" fill="#d4d4d4">Kotlin · Java · PostgreSQL · Elasticsearch</text>
+
+    <text x="140" y="417" fill="#4ade80" font-weight="600">LOCATION</text>
+    <text x="268" y="417" fill="#d4d4d4">Bursa, Turkiye</text>
+
+    <text x="140" y="449" fill="#4ade80" font-weight="600">COMPANY</text>
+    <text x="268" y="449" fill="#facc15">Grispi</text>
+    <text x="336" y="449" fill="#d4d4d4">· since 2020 · full-time</text>
+  </g>
+
+  <!-- call-to-action -->
+  <g transform="translate(140, 530)">
+    <text fill="#4ade80" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="700">
+      → ugurcandede.github.io
+    </text>
+  </g>
+
+  <!-- bottom-right decorative cursor -->
+  <rect x="1040" y="518" width="10" height="18" fill="#4ade80" opacity="0.9"/>
+  <text x="1080" y="533" fill="#7a8087" font-family="'JetBrains Mono', monospace" font-size="12"
+        text-anchor="start">tmux</text>
+</svg>
