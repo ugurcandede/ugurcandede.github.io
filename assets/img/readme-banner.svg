@@ -174,14 +174,14 @@
 <!--    <text class="text-body"    x="480" y="324">macOS · darwin</text>-->
 
     <text class="accent-green" x="370" y="324" font-weight="600">UPTIME</text>
-    <text class="text-body"    x="480" y="324">since 2020 · full-time</text>
+    <text class="text-body"    x="480" y="324">since 2022 · full-time</text>
   </g>
 
   <!-- bio -->
   <g font-family="'JetBrains Mono', monospace" font-size="13">
     <text class="text-body" x="370" y="362">Developer with a taste for hard problems. Building customer support infrastructure at</text>
     <text x="370" y="379">
-      <tspan class="accent-yellow" font-weight="600">Grispi</tspan> <tspan class="text-body"> since 2020 — Lately pushing into full-stack territory.</tspan>
+      <tspan class="accent-yellow" font-weight="600">Grispi</tspan> <tspan class="text-body"> since 2022 — Lately pushing into full-stack territory.</tspan>
     </text>
     <text class="text-body" x="370" y="408"> After hours I ship small tools: TapLock, claude-symlink, a Windows Terminal layout generator.</text>
   </g>
