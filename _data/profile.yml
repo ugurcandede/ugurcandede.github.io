@@ -8,7 +8,7 @@ session_tagline: "grispi · developer · since 2022"
 
 neofetch_rows:
   - { k: NAME,      v: "<span class='hl'>Ugurcan Dede</span>" }
-  - { k: TITLE,     v: "Developer @ Grispi · backend → full-stack" }
+  - { k: TITLE,     v: "Developer @ Grispi · backend" }
   - { k: LOCATION,  v: "Bursa, Turkiye" }
   - { k: EDUCATION, v: "CS @ <span class='hl'>Uludag University</span> · <span class='acc'>MIS</span>" }
   - { k: COMPANY,   v: "<span class='acc'>Grispi</span> · Izmir, Turkiye | Remote" }
@@ -24,14 +24,14 @@ bio: >-
     Lately pushing into full-stack territory.
   </p>
   <p>
-    After hours I ship small tools: TapLock, claude-symlink, a Windows Terminal layout generator.
+    After hours I ship small tools: TapLock, claude-symlink, roadie.
   </p>
 
 languages:
   - { label: Java,       pct: 45 }
-  - { label: Kotlin,     pct: 22 }
+  - { label: Kotlin,     pct: 32 }
   - { label: TypeScript, pct: 18 }
-  - { label: Others,     pct: 15 }
+  - { label: Others,     pct: 5 }
 
 contacts:
   - { type: link,  label: github,    url: "https://github.com/ugurcandede" }

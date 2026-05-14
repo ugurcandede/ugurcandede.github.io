@@ -1,5 +1,6 @@
 - name: TapLock
-  tech: [Swift, SwiftUI]
+  description: menu bar app to disable keyboard and trackpad on your Mac
+  tech: [ Swift, SwiftUI ]
   homepage: https://ugurcandede.github.io/taplock-app/
   variants:
     - { label: app, repo: ugurcandede/taplock-app }
@@ -7,13 +8,21 @@
     - { label: tap, repo: ugurcandede/homebrew-taplock }
 
 - name: claude-symlink
-  tech: [Node.js, CLI]
+  description: one source of truth for your Claude config across projects and machines — symlinked, zero npm dependencies
+  tech: [ Node.js, CLI ]
   repo: ugurcandede/claude-symlink
 
+- name: roadie
+  description: when CI/CD is down, the roadie ships it
+  tech: [ Node.js, CLI ]
+  repo: ugurcandede/roadie
+
 - name: windows-terminal-layout-generator
-  tech: [JavaScript, HTML, Tailwind]
+  description: build multi-panel Windows Terminal layouts from a GUI
+  tech: [ JavaScript, HTML, Tailwind ]
   repo: ugurcandede/windows-terminal-multi-panel-setup-generator
 
 - name: s3-presigned-url-proxy
-  tech: [Python, Flask, Docker]
+  description: generate S3 pre-signed URLs with automatic 302 redirects
+  tech: [ Python, Flask, Docker ]
   repo: ugurcandede/s3-presigned-url-proxy
