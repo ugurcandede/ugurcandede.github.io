@@ -2,7 +2,7 @@
  * pulse.js — live GitHub activity renderers for the pulse pane.
  *
  * Three renderers, each triggered by a marker data attribute:
- *   [data-yearmap]           → ASCII heatmap grid (configurable range)
+ *   [data-yearmap]           → inline SVG contribution heatmap (configurable range)
  *   [data-neofetch-stats]    → key/value stats block
  *   [data-langbars]          → top-language horizontal bars (optionally
  *                               seeded inline via data-langs)
@@ -17,7 +17,6 @@
  */
 (() => {
   const user = document.body.dataset.ghUser || 'ugurcandede';
-  const HEAT = '·▃▅▇█';
 
   const contributionsAPI = `https://github-contributions-api.jogruber.de/v4/${user}?y=last`;
   const eventsAPI = `https://api.github.com/users/${user}/events/public?per_page=100`;
@@ -63,49 +62,82 @@
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[c]));
 
-  // ── ASCII heatmap ──
+  // ── SVG heatmap ──
+  // Renders the contribution grid as a responsive inline SVG so we can theme
+  // cells per CSS (.cell.l0–.l4) instead of mono characters that don't scale.
+  const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const DAY_LABELS  = ['Mon', '',    'Wed', '',    'Fri', '',    ''];
+
   const buildYearmap = (days) => {
     if (!days.length) return '<div class="err">no data</div>';
+
     const firstDate = new Date(days[0].date + 'T00:00:00Z');
     const firstDow = (firstDate.getUTCDay() + 6) % 7; // Mon = 0
     const padded = Array(firstDow).fill(null).concat(days);
     const weeks = Math.ceil(padded.length / 7);
 
-    const grid = Array.from({ length: 7 }, () => Array(weeks).fill(null));
-    for (let i = 0; i < padded.length; i++) {
-      grid[i % 7][Math.floor(i / 7)] = padded[i];
-    }
+    // Bucket each day's count into 5 quartile levels (l0=empty, l4=hottest).
+    // Quartile against max keeps the demo simple; matches GitHub's coarse feel.
     const max = Math.max(1, ...days.map(d => d.count || 0));
-    const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const levelOf = (n) => {
+      if (!n) return 0;
+      if (n >= max * 0.75) return 4;
+      if (n >= max * 0.50) return 3;
+      if (n >= max * 0.25) return 2;
+      return 1;
+    };
 
-    let html = '';
-    for (let r = 0; r < 7; r++) {
-      let line = '';
-      for (let c = 0; c < weeks; c++) {
-        const cell = grid[r][c];
-        if (!cell) { line += '  '; continue; }
-        const n = cell.count || 0;
-        const idx = n === 0 ? 0 : Math.min(HEAT.length - 1, 1 + Math.floor((n / max) * (HEAT.length - 2)));
-        line += HEAT[idx] + ' ';
-      }
-      html += `<span class="row"><span class="lbl">${dayLabels[r]}</span>${escape(line)}</span>`;
+    // Geometry. viewBox is intrinsic; CSS scales the SVG to container width.
+    const cell = 11, gap = 3, step = cell + gap;
+    const padTop = 14, padLeft = 26;
+    const w = padLeft + weeks * step;
+    const h = padTop + 7 * step;
+
+    let cells = '';
+    for (let i = 0; i < padded.length; i++) {
+      const d = padded[i];
+      if (!d) continue;
+      const col = Math.floor(i / 7);
+      const row = i % 7;
+      const x = padLeft + col * step;
+      const y = padTop + row * step;
+      const lvl = levelOf(d.count || 0);
+      const n = d.count || 0;
+      cells += `<rect x="${x}" y="${y}" width="${cell}" height="${cell}" rx="2" class="cell l${lvl}"><title>${escape(d.date)}: ${n} ${n === 1 ? 'contribution' : 'contributions'}</title></rect>`;
     }
 
-    const monthLabels = Array(weeks).fill('  ');
+    let labels = '';
+    for (let r = 0; r < 7; r++) {
+      if (!DAY_LABELS[r]) continue;
+      const y = padTop + r * step + cell - 1;
+      labels += `<text x="0" y="${y}" class="lbl-day">${DAY_LABELS[r]}</text>`;
+    }
     let lastMonth = -1;
     for (let c = 0; c < weeks; c++) {
-      const cell = grid[0][c] || grid[1][c] || grid[2][c];
-      if (!cell) continue;
-      const m = new Date(cell.date + 'T00:00:00Z').getUTCMonth();
+      // Use any non-null cell in this column to determine the month.
+      const sample = padded[c * 7] || padded[c * 7 + 1] || padded[c * 7 + 2];
+      if (!sample) continue;
+      const m = new Date(sample.date + 'T00:00:00Z').getUTCMonth();
       if (m !== lastMonth) {
-        const name = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m];
-        if (c + 1 < weeks) monthLabels[c] = name.slice(0, 3) + ' ';
+        const x = padLeft + c * step;
+        labels += `<text x="${x}" y="10" class="lbl-mo">${MONTH_NAMES[m]}</text>`;
         lastMonth = m;
       }
     }
-    html += `<span class="months">${escape(monthLabels.join(''))}</span>`;
-    html += `<span class="legend">less <span class="swatch">${HEAT.split('').join(' ')}</span> more · ${days.length} days · peak ${max}</span>`;
-    return html;
+
+    const svg =
+      `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMinYMid meet" ` +
+      `role="img" aria-label="${days.length}-day contribution heatmap, peak ${max}">` +
+      labels + cells + `</svg>`;
+
+    const swatches = [0,1,2,3,4].map(l => `<span class="sw l${l}"></span>`).join('');
+    const legend =
+      `<div class="legend">` +
+      `<span>less</span>${swatches}<span>more</span>` +
+      `<span class="meta">· ${days.length} days · peak ${max}</span>` +
+      `</div>`;
+
+    return svg + legend;
   };
 
   const renderYearmap = async () => {
@@ -159,7 +191,7 @@
       <div class="divider">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
       <div class="row"><span class="k">Contribs (y)</span><span class="v">${contribErr ? fmt(null, 'api limit · retry later') : `<span class="hl">${totalYear.toLocaleString()}</span> · today ${today}`}</span></div>
       <div class="row"><span class="k">Active (y)</span><span class="v">${contribErr ? fmt(null, '—') : `${activeDays}/${days.length} days`}</span></div>
-      <div class="row"><span class="k">Last push</span><span class="v">${pushErr ? fmt(null, 'api limit · retry later') : escape(lastPush || 'no public push found')}</span></div>
+      <div class="row"><span class="k">Last public push</span><span class="v">${pushErr ? fmt(null, 'api limit · retry later') : escape(lastPush || 'no public push found')}</span></div>
     `;
     outs.forEach(o => o.innerHTML = html);
   };

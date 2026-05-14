@@ -11,11 +11,11 @@ neofetch_rows:
   - { k: TITLE,     v: "Developer @ Grispi · backend" }
   - { k: LOCATION,  v: "Bursa, Turkiye" }
   - { k: EDUCATION, v: "CS @ <span class='hl'>Uludag University</span> · <span class='acc'>MIS</span>" }
-  - { k: COMPANY,   v: "<span class='acc'>Grispi</span> · Izmir, Turkiye | Remote" }
+  - { k: COMPANY,   v: "<span class='acc'>Grispi</span> · Izmir, Turkiye | <span class='accm'>Remote</span>" }
   - { k: STACK,     v: "Kotlin · Java · PostgreSQL · Elasticsearch" }
   - { k: SHELL,     v: "javac (21.0.10)" }
   - { k: HOST,      v: "macOS · darwin" }
-  - { k: UPTIME,    v: "since 2022 · full-time" }
+  - { k: UPTIME,    v: "<span class='acc'>since 2022</span> · full-time" }
 
 bio: >-
   <p>
