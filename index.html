@@ -66,6 +66,7 @@ layout: default
             <tr>
               <th>perm</th>
               <th>name</th>
+              <th>desc</th>
               <th>tech</th>
             </tr>
           </thead>
@@ -78,10 +79,11 @@ layout: default
               <tr class="ls-row{% if project.variants %} has-children{% endif %}">
                 <td class="perm">{% if project.variants %}drwxr-xr-x{% else %}-rw-r--r--{% endif %}</td>
                 <td class="name"><a href="{{ url }}" target="_blank" rel="noopener">{{ slug }}{% if project.variants %}/{% endif %}</a></td>
+                <td class="desc">{{ project.description }}</td>
                 <td class="tech">{% for t in project.tech %}<span>{{ t }}</span>{% endfor %}</td>
               </tr>
               {% if project.variants %}
-                <tr><td colspan="3" style="padding:0;">
+                <tr><td colspan="4" style="padding:0;">
                   <div class="ls-variants">
                     {% for v in project.variants %}
                       <div class="lsv">
@@ -110,7 +112,7 @@ layout: default
         <div class="hybrid">
           <div>
             <div class="hybrid-label"><span class="hash">#</span> contributions · last 180 days</div>
-            <div class="yearmap" data-yearmap data-yearmap-days="180"><div class="loading">loading&hellip;</div></div>
+            <div class="yearmap" data-yearmap data-yearmap-days="179"><div class="loading">loading&hellip;</div></div>
           </div>
           <div>
             <div class="hybrid-label"><span class="hash">#</span> stats</div>

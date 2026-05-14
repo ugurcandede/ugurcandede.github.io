@@ -76,7 +76,7 @@ body {
 .session-bar .tag.on { color: var(--cyan); }
 .session-bar .tag .n { color: var(--yellow); margin-right: 4px; }
 .session-bar .spacer { flex: 1 0 0; }
-.session-bar .uptime { color: var(--muted); white-space: nowrap; }
+.session-bar .uptime { color: var(--muted); white-space: nowrap; margin-left: auto; }
 
 /* ── pane grid ── */
 .panes {
@@ -224,6 +224,8 @@ body {
 .neofetch .row .v { color: var(--fg); }
 .neofetch .row .v .hl { color: var(--cyan); }
 .neofetch .row .v .acc { color: var(--yellow); }
+.neofetch .row .v .accr { color: var(--red); }
+.neofetch .row .v .accm { color: var(--magenta); font-weight: 600; }
 
 .neofetch .bio-row {
   margin-top: 10px;
@@ -290,6 +292,20 @@ body {
 .ls-row .name a:focus-visible { color: var(--yellow); border-bottom-color: var(--yellow); }
 .ls-row .tech { color: var(--muted); font-size: 11.5px; }
 .ls-row .tech span + span::before { content: " · "; color: var(--dim); }
+
+/* desc cell: inline "# comment" — terminal-comment vibe, prose wraps */
+.ls-row .desc {
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.55;
+  word-break: break-word;
+  padding-right: 14px;
+}
+.ls-row .desc::before {
+  content: "# ";
+  color: var(--green);
+  margin-right: 1px;
+}
 
 .ls-row.has-children { color: var(--green); }
 .ls-row.has-children .name::before { content: "▾ "; color: var(--green); }
@@ -363,57 +379,67 @@ body {
 
 .hybrid-label .hash { color: var(--green); margin-right: 6px; }
 
-/* year heatmap */
+/* year heatmap — inline SVG, GitHub-style dark-theme palette */
 .yearmap {
-  font-family: var(--mono);
-  font-size: 11px;
-  line-height: 1.55;
-  color: var(--green);
-  white-space: pre;
-  overflow: hidden; /* no internal scroll — layout drops to single-col instead */
-  text-shadow: 0 0 3px rgba(74, 222, 128, 0.25);
-  letter-spacing: 1px;
-  /* center the graph block inside its container (content-width + auto margin) */
-  width: max-content;
+  width: 100%;
   max-width: 100%;
-  margin-inline: auto;
+  font-family: var(--mono);
+  color: var(--muted);
+  overflow: hidden;
 }
 
-.yearmap .row { display: block; padding: 1px 0; }
-.yearmap .row .lbl {
-  color: var(--muted);
-  text-shadow: none;
-  margin-right: 8px;
-  display: inline-block;
-  width: 28px;
-  letter-spacing: 0;
-}
-.yearmap .months {
+.yearmap svg {
   display: block;
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 0;
-  margin-top: 4px;
-  padding-left: 36px;
-  text-shadow: none;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
 }
+
+/* 5-level intensity ramp. l0 = no contributions; l4 = hottest day.
+   Tones are GitHub's dark-theme contribution palette, tuned to sit on --pane-bg. */
+.yearmap .cell        { fill: #161b22; }
+.yearmap .cell.l1     { fill: #0e4429; }
+.yearmap .cell.l2     { fill: #006d32; }
+.yearmap .cell.l3     { fill: #26a641; }
+.yearmap .cell.l4     { fill: #39d353; }
+
+.yearmap .lbl-day,
+.yearmap .lbl-mo {
+  fill: var(--dim);
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.04em;
+}
+
 .yearmap .legend {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 10.5px;
   color: var(--muted);
-  text-shadow: none;
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
   align-items: center;
   letter-spacing: 0;
 }
-.yearmap .legend .swatch { color: var(--green); text-shadow: 0 0 3px rgba(74, 222, 128, 0.25); }
+
+.yearmap .legend .sw {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: #161b22;
+}
+.yearmap .legend .sw.l1 { background: #0e4429; }
+.yearmap .legend .sw.l2 { background: #006d32; }
+.yearmap .legend .sw.l3 { background: #26a641; }
+.yearmap .legend .sw.l4 { background: #39d353; }
+
+.yearmap .legend .meta { color: var(--dim); margin-left: 2px; }
+
 .yearmap .loading, .yearmap .err {
   color: var(--muted);
   font-style: italic;
   font-size: 11.5px;
-  text-shadow: none;
-  letter-spacing: 0;
   padding: 8px 0;
 }
 
@@ -429,7 +455,7 @@ body {
 .ntop .head .at { color: var(--muted); }
 .ntop .divider { color: var(--dim); margin-bottom: 6px; letter-spacing: 0; }
 .ntop .row { display: flex; gap: 10px; }
-.ntop .k { color: var(--green); font-weight: 600; width: 110px; flex-shrink: 0; }
+.ntop .k { color: var(--green); font-weight: 600; width: 130px; flex-shrink: 0; }
 .ntop .v { color: var(--fg); }
 .ntop .v .hl { color: var(--cyan); }
 .ntop .v .acc { color: var(--yellow); }
@@ -596,7 +622,7 @@ body {
   .ls-variants { margin-top: 4px; padding-left: 16px; }
 
   /* ntop stats: shrink key column */
-  .ntop .k { width: 96px; font-size: 11.5px; }
+  .ntop .k { width: 116px; font-size: 11.5px; }
 
   /* language bars: shrink name column, drop pct width */
   .langs .row { grid-template-columns: 90px 1fr 40px; gap: 10px; }
@@ -605,9 +631,6 @@ body {
   .contact-list { font-size: 14px; }
   .contact-list li { padding: 8px 0; gap: 12px; align-items: center; }
   .contact-list .k { min-width: 70px; font-size: 12.5px; }
-
-  /* prevent the year heatmap from clipping on tiny screens: allow scroll here */
-  .yearmap { overflow-x: auto; }
 }
 
 @media (max-width: 400px) {
