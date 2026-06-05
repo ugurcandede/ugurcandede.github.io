@@ -3,7 +3,7 @@ github_handle:   ugurcandede
 display_handle:  ugurcan.dede
 avatar:          /assets/img/avatar.jpg
 
-neofetch_host:   portfolio
+neofetch_host:   grispi.com
 session_tagline: "grispi · developer · since 2022"
 
 neofetch_rows:
@@ -20,11 +20,10 @@ neofetch_rows:
 bio: >-
   <p>
     Developer with a taste for hard problems.
-    Building customer support infrastructure at <strong>Grispi</strong> since 2022 — 
-    Lately pushing into full-stack territory.
+    Building customer support infrastructure at <strong>Grispi</strong> since 2022.
   </p>
   <p>
-    After hours I ship small tools: TapLock, claude-symlink, roadie.
+    <span class='acc'>After hours I ship small tools:</span> TapLock, claude-symlink, roadie, lumea and Windows Terminal layout generator.
   </p>
 
 languages:

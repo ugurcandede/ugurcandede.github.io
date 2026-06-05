@@ -20,7 +20,14 @@
 - name: windows-terminal-layout-generator
   description: build multi-panel Windows Terminal layouts from a GUI
   tech: [ JavaScript, HTML, Tailwind ]
-  repo: ugurcandede/windows-terminal-multi-panel-setup-generator
+  homepage: https://ugurcandede.github.io/windows-terminal-multi-panel-setup-generator/
+  variants:
+    - { label: repo, repo: ugurcandede/windows-terminal-layout-generator }
+
+- name: lumea
+  description: Desktop control app for ELK-BLEDOM / MELK Bluetooth LED strips
+  tech: [ Python ]
+  repo: ugurcandede/Lumea
 
 - name: s3-presigned-url-proxy
   description: generate S3 pre-signed URLs with automatic 302 redirects

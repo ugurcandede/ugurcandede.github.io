@@ -238,6 +238,9 @@ body {
 }
 
 .neofetch .bio-row strong { color: var(--yellow); font-weight: 700; }
+.neofetch .bio-row .hl { color: var(--cyan); }
+.neofetch .bio-row .acc { color: var(--yellow); }
+.neofetch .bio-row .accm { color: var(--magenta); font-weight: 600; }
 
 .neofetch .color-dots {
   margin-top: 24px;
