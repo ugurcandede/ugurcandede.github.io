@@ -281,7 +281,7 @@ body {
 .ls-table tbody tr:last-child { border-bottom: none; }
 
 .ls-row .perm { color: var(--dim); white-space: nowrap; }
-.ls-row .name { color: var(--cyan); font-weight: 500; }
+.ls-row .name { color: var(--cyan); font-weight: 500; white-space: nowrap; }
 .ls-row .name a {
   color: var(--cyan);
   text-decoration: none;
@@ -293,7 +293,7 @@ body {
 }
 .ls-row .name a:hover,
 .ls-row .name a:focus-visible { color: var(--yellow); border-bottom-color: var(--yellow); }
-.ls-row .tech { color: var(--muted); font-size: 11.5px; }
+.ls-row .tech { color: var(--muted); font-size: 11.5px; white-space: nowrap;}
 .ls-row .tech span + span::before { content: " · "; color: var(--dim); }
 
 /* desc cell: inline "# comment" — terminal-comment vibe, prose wraps */

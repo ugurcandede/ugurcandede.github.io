@@ -17,12 +17,12 @@
   tech: [ Node.js, CLI ]
   repo: ugurcandede/roadie
 
-- name: windows-terminal-layout-generator
+- name: wt-panel-generator
   description: build multi-panel Windows Terminal layouts from a GUI
-  tech: [ JavaScript, HTML, Tailwind ]
+  tech: [ React, Tailwind, Vite ]
   homepage: https://ugurcandede.github.io/windows-terminal-multi-panel-setup-generator/
   variants:
-    - { label: repo, repo: ugurcandede/windows-terminal-layout-generator }
+    - { label: repo, repo: ugurcandede/windows-terminal-multi-panel-setup-generator }
 
 - name: lumea
   description: Desktop control app for ELK-BLEDOM / MELK Bluetooth LED strips
