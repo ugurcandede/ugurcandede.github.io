@@ -6,6 +6,7 @@
     - { label: app, repo: ugurcandede/taplock-app }
     - { label: cli, repo: ugurcandede/taplock }
     - { label: tap, repo: ugurcandede/homebrew-taplock }
+    - { label: windows-port, repo: ugurcandede/taplock-windows, tech: [Python, PySide6] }
 
 - name: claude-symlink
   description: one source of truth for your Claude config across projects and machines — symlinked, zero npm dependencies

@@ -50,7 +50,7 @@ body {
 
 /* ── tmux-like outer status ── */
 .session {
-  max-width: 1280px;
+  max-width: 1380px;
   margin: 0 auto;
   border: 1px solid var(--line-hl);
   border-radius: 4px;
@@ -293,8 +293,9 @@ body {
 }
 .ls-row .name a:hover,
 .ls-row .name a:focus-visible { color: var(--yellow); border-bottom-color: var(--yellow); }
-.ls-row .tech { color: var(--muted); font-size: 11.5px; white-space: nowrap;}
-.ls-row .tech span + span::before { content: " · "; color: var(--dim); }
+.ls-row .tech, .lsv-row .tech { color: var(--muted); font-size: 11.5px; white-space: nowrap;}
+.ls-row .tech span + span::before,
+.lsv-row .tech span + span::before { content: " · "; color: var(--dim); }
 
 /* desc cell: inline "# comment" — terminal-comment vibe, prose wraps */
 .ls-row .desc {
@@ -313,21 +314,17 @@ body {
 .ls-row.has-children { color: var(--green); }
 .ls-row.has-children .name::before { content: "▾ "; color: var(--green); }
 
-.ls-variants {
-  padding-left: 24px;
-  font-size: 11.5px;
-  border-left: 1px solid var(--line-hl);
-  margin: 2px 0 6px 4px;
-}
+/* variant rows are real table rows so their tech cell lines up with the tech column */
+.lsv-row:not(.lsv-last) { border-bottom: none; }
+.lsv-row td { padding-top: 3px; padding-bottom: 3px; font-size: 11.5px; }
 
-.ls-variants .lsv {
-  padding: 4px 0;
-  display: flex;
-  gap: 10px;
+.lsv-row .lsv-main {
   color: var(--muted);
+  padding-left: 24px;
+  border-left: 1px solid var(--line-hl);
 }
 
-.ls-variants .lsv a {
+.lsv-row a {
   color: var(--blue);
   text-decoration: none;
   padding: 4px 0;
@@ -335,9 +332,9 @@ body {
   border-bottom: 1px solid transparent;
   transition: color 0.15s, border-color 0.15s;
 }
-.ls-variants .lsv a:hover,
-.ls-variants .lsv a:focus-visible { color: var(--cyan); border-bottom-color: var(--cyan); }
-.ls-variants .lsv .lbl { color: var(--magenta); min-width: 28px; }
+.lsv-row a:hover,
+.lsv-row a:focus-visible { color: var(--cyan); border-bottom-color: var(--cyan); }
+.lsv-row .lbl { color: var(--magenta); display: inline-block; min-width: 28px; margin-right: 10px; }
 
 /* ── pulse hybrid pane (heatmap + stats + langs) ──
    Default layout: vertically stacked. Re-arranged at specific breakpoints below. */
@@ -622,7 +619,9 @@ body {
   }
   .ls-row .name { font-size: 14px; }
   .ls-row .tech { color: var(--muted); font-size: 11.5px; }
-  .ls-variants { margin-top: 4px; padding-left: 16px; }
+  .ls-table .lsv-row { padding: 0; }
+  .lsv-row .lsv-main { padding-left: 16px; }
+  .lsv-row .tech { padding-left: 16px; border-left: 1px solid var(--line-hl); }
 
   /* ntop stats: shrink key column */
   .ntop .k { width: 116px; font-size: 11.5px; }

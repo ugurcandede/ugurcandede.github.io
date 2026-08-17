@@ -83,16 +83,15 @@ layout: default
                 <td class="tech">{% for t in project.tech %}<span>{{ t }}</span>{% endfor %}</td>
               </tr>
               {% if project.variants %}
-                <tr><td colspan="4" style="padding:0;">
-                  <div class="ls-variants">
-                    {% for v in project.variants %}
-                      <div class="lsv">
-                        <span class="lbl">{{ v.label }}</span>
-                        <a href="https://github.com/{{ v.repo }}" target="_blank" rel="noopener">{{ v.repo }}</a>
-                      </div>
-                    {% endfor %}
-                  </div>
-                </td></tr>
+                {% for v in project.variants %}
+                  <tr class="lsv-row{% if forloop.last %} lsv-last{% endif %}">
+                    <td class="lsv-main" colspan="3">
+                      <span class="lbl">{{ v.label }}</span>
+                      <a href="https://github.com/{{ v.repo }}" target="_blank" rel="noopener">{{ v.repo }}</a>
+                    </td>
+                    <td class="tech">{% for t in v.tech %}<span>{{ t }}</span>{% endfor %}</td>
+                  </tr>
+                {% endfor %}
               {% endif %}
             {% endfor %}
           </tbody>
