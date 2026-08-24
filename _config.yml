@@ -11,6 +11,8 @@ og_image_width:  1200
 og_image_height: 630
 twitter_handle:  "dedeugurcan"
 
+google_analytics: G-5HKZ9ZLZH4
+
 exclude:
   - Gemfile
   - Gemfile.lock
