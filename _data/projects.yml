@@ -5,8 +5,14 @@
   variants:
     - { label: app, repo: ugurcandede/taplock-app }
     - { label: cli, repo: ugurcandede/taplock }
-    - { label: tap, repo: ugurcandede/homebrew-taplock }
     - { label: windows-port, repo: ugurcandede/taplock-windows, tech: [Python, PySide6] }
+
+- name: sotto
+  description: mute your microphone from the menu bar — one key, every app, instantly
+  tech: [ Swift, SwiftUI ]
+  homepage: https://ugurcandede.github.io/sotto/
+  variants:
+    - { label: repo, repo: ugurcandede/sotto }
 
 - name: claude-symlink
   description: one source of truth for your Claude config across projects and machines — symlinked, zero npm dependencies
@@ -18,15 +24,8 @@
   tech: [ Node.js, CLI ]
   repo: ugurcandede/roadie
 
-- name: wt-panel-generator
-  description: build multi-panel Windows Terminal layouts from a GUI
-  tech: [ React, Tailwind, Vite ]
-  homepage: https://ugurcandede.github.io/windows-terminal-multi-panel-setup-generator/
-  variants:
-    - { label: repo, repo: ugurcandede/windows-terminal-multi-panel-setup-generator }
-
 - name: lumea
-  description: Desktop control app for ELK-BLEDOM / MELK Bluetooth LED strips
+  description: desktop control app for ELK-BLEDOM / MELK Bluetooth LED strips
   tech: [ Python ]
   repo: ugurcandede/Lumea
 
@@ -34,3 +33,10 @@
   description: generate S3 pre-signed URLs with automatic 302 redirects
   tech: [ Python, Flask, Docker ]
   repo: ugurcandede/s3-presigned-url-proxy
+
+- name: wt-panel-generator
+  description: build multi-panel Windows Terminal layouts from a GUI
+  tech: [ React, Tailwind, Vite ]
+  homepage: https://ugurcandede.github.io/windows-terminal-multi-panel-setup-generator/
+  variants:
+    - { label: repo, repo: ugurcandede/windows-terminal-multi-panel-setup-generator }
